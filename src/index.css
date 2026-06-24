@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color: #2d2a26;
+    background: #fffdf8;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    background:
+      linear-gradient(180deg, rgba(248, 243, 234, 0.78) 0%, rgba(255, 253, 248, 1) 42%),
+      #fffdf8;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+@layer components {
+  .focus-ring {
+    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive;
+  }
+
+  .hero-copy-shadow {
+    text-shadow: 0 1px 22px rgba(255, 253, 248, 0.72);
+  }
+}
