@@ -216,12 +216,23 @@ function buildOrderPayload(customer, items) {
   return {
     customerName: customer.customerName.trim(),
     customerEmail: customer.customerEmail.trim() || undefined,
-    customerPhone: customer.customerPhone.trim(),
-    shippingAddress: customer.shippingAddress.trim() || undefined,
+    customerPhone: normalizePhone(customer.customerPhone),
+    shippingAddress: customer.shippingAddress.trim(),
     notes: customer.notes.trim() || undefined,
     items: items.map((item) => ({
       variantId: item.variantId,
       quantity: item.quantity,
     })),
   };
+}
+
+function normalizePhone(value) {
+  const trimmed = value.trim();
+  const digits = trimmed.replace(/\D/g, "");
+
+  if (trimmed.startsWith("+")) {
+    return `+${digits}`;
+  }
+
+  return digits || trimmed;
 }

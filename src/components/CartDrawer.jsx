@@ -39,7 +39,8 @@ export default function CartDrawer({
       return;
     }
 
-    const validationError = validateCustomer(customer, action);
+    const cleanedCustomer = cleanCustomer(customer);
+    const validationError = validateCustomer(cleanedCustomer, action);
 
     if (validationError) {
       setFormError(validationError);
@@ -49,11 +50,11 @@ export default function CartDrawer({
     setFormError("");
 
     if (action === "wompi") {
-      onPayOnline(customer);
+      onPayOnline(cleanedCustomer);
       return;
     }
 
-    onCheckout(customer);
+    onCheckout(cleanedCustomer);
   }
 
   return (
@@ -241,6 +242,9 @@ export default function CartDrawer({
               <span>Total estimado</span>
               <span>{formatCurrency(total)}</span>
             </div>
+            <p className="mt-1 text-xs leading-5 text-ink/52">
+              El valor final del envio se confirma por WhatsApp o al generar la guia.
+            </p>
             <div className="mt-4 grid gap-2">
               <button
                 className={[
@@ -302,21 +306,43 @@ function CheckoutInput({
 }
 
 function validateCustomer(customer, action) {
-  if (!customer.customerName.trim()) {
+  if (!customer.customerName) {
     return "Escribe el nombre del cliente.";
   }
 
-  if (!customer.customerPhone.trim()) {
+  if (!customer.customerPhone) {
     return "Escribe un telefono de contacto.";
   }
 
-  if (action === "wompi" && !isValidEmail(customer.customerEmail)) {
+  if (!isValidPhone(customer.customerPhone)) {
+    return "Revisa el telefono. Debe tener al menos 7 digitos.";
+  }
+
+  if (!customer.shippingAddress) {
+    return "Escribe la direccion de entrega.";
+  }
+
+  if (customer.customerEmail && !isValidEmail(customer.customerEmail)) {
+    return "Revisa el correo electronico.";
+  }
+
+  if (action === "wompi" && !customer.customerEmail) {
     return "Para pagar con Wompi necesitas un correo valido.";
   }
 
   return "";
 }
 
+function cleanCustomer(customer) {
+  return Object.fromEntries(
+    Object.entries(customer).map(([key, value]) => [key, String(value || "").trim()]),
+  );
+}
+
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+}
+
+function isValidPhone(value) {
+  return value.replace(/\D/g, "").length >= 7;
 }
