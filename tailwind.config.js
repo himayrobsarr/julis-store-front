@@ -4,21 +4,24 @@ export default {
   theme: {
     extend: {
       colors: {
-        linen: "#f8f3ea",
-        cotton: "#fffdf8",
-        ink: "#2d2a26",
-        olive: "#7b8a67",
-        sage: "#dfe7dc",
-        clay: "#b96850",
-        denim: "#637d8b",
-        mustard: "#cda45e",
+        linen: "#f4f1ef",
+        cotton: "#fffdfb",
+        ink: "#353a3c",
+        brand: "#3dbdd1",
+        olive: "#3ba8b9",
+        sage: "#e5f5f7",
+        clay: "#d3937a",
+        denim: "#657e87",
+        mustard: "#e1b99f",
       },
       boxShadow: {
-        soft: "0 18px 45px rgba(45, 42, 38, 0.12)",
+        soft: "0 24px 65px rgba(53, 58, 60, 0.16)",
+        card: "0 12px 34px rgba(53, 58, 60, 0.08)",
       },
       fontFamily: {
+        display: ["Fraunces", "Georgia", "Cambria", "Times New Roman", "serif"],
         sans: [
-          "Inter",
+          "Nunito Sans",
           "ui-sans-serif",
           "system-ui",
           "-apple-system",

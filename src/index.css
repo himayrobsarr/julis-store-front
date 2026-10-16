@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    color: #2d2a26;
-    background: #fffdf8;
+    color: #353a3c;
+    background: #fffdfb;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -17,12 +17,21 @@
   }
 
   body {
+    @apply font-sans;
     min-width: 320px;
     min-height: 100vh;
     margin: 0;
     background:
-      linear-gradient(180deg, rgba(248, 243, 234, 0.78) 0%, rgba(255, 253, 248, 1) 42%),
-      #fffdf8;
+      radial-gradient(circle at 8% 14%, rgba(61, 189, 209, 0.08), transparent 28rem),
+      linear-gradient(180deg, rgba(244, 241, 239, 0.72) 0%, rgba(255, 253, 251, 1) 42%),
+      #fffdfb;
+  }
+
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-optical-sizing: auto;
   }
 
   button,
@@ -43,6 +52,146 @@
   }
 
   .hero-copy-shadow {
-    text-shadow: 0 1px 22px rgba(255, 253, 248, 0.72);
+    text-shadow: 0 1px 24px rgba(255, 253, 251, 0.82);
+  }
+
+  .brand-lockup {
+    @apply inline-flex items-center;
+  }
+
+  .brand-lockup-divider {
+    @apply h-8 w-px;
+    background: rgba(53, 58, 60, 0.12);
+  }
+
+  .brand-mark {
+  @apply relative block shrink-0 overflow-hidden;
+  }
+
+  .brand-mark img {
+    @apply pointer-events-none absolute left-1/2 top-1/2 max-w-none -translate-x-1/2 -translate-y-1/2 select-none;
+  }
+
+  .brand-mark-julis {
+  width: 4.2rem;
+  height: 4rem;
+  }
+
+  .brand-mark-julis img {
+    width: 5.3rem;
+  }
+
+  .brand-mark-maju {
+  width: 8.8rem;
+  height: 3.4rem;
+  }
+
+  .brand-mark-maju img {
+    width: 12rem;
+  top: calc(50% + 0.79rem);
+  }
+
+  .brand-lockup-default,
+  .brand-lockup-story {
+    gap: 0.8rem;
+  }
+
+  .brand-lockup-header {
+    gap: 0.55rem;
+  }
+
+  .brand-lockup-header .brand-mark-julis {
+  width: 3.3rem;
+  height: 3.3rem;
+  }
+
+  .brand-lockup-header .brand-mark-julis img {
+    width: 4.45rem;
+  }
+
+  .brand-lockup-header .brand-mark-maju {
+  width: 6.6rem;
+  height: 2.6rem;
+  }
+
+  .brand-lockup-header .brand-mark-maju img {
+    width: 8.9rem;
+  top: calc(50% + 0.59rem);
+  }
+
+  .brand-lockup-header .brand-lockup-divider {
+    height: 2.1rem;
+  }
+
+  .brand-lockup-hero {
+    gap: 1rem;
+  }
+
+  .brand-lockup-hero .brand-mark-julis {
+  width: 7rem;
+  height: 6.7rem;
+  }
+
+  .brand-lockup-hero .brand-mark-julis img {
+    width: 9.3rem;
+  }
+
+  .brand-lockup-hero .brand-mark-maju {
+  width: 12.4rem;
+  height: 4.6rem;
+  }
+
+  .brand-lockup-hero .brand-mark-maju img {
+    width: 17rem;
+  top: calc(50% + 1.12rem);
+  }
+
+  .brand-lockup-hero .brand-lockup-divider {
+    height: 4rem;
+  }
+
+  .brand-lockup-footer {
+    gap: 0.4rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.92);
+    padding: 0.2rem 0.55rem;
+  }
+
+  .brand-lockup-footer .brand-mark-julis {
+  width: 2.8rem;
+  height: 2.8rem;
+  }
+
+  .brand-lockup-footer .brand-mark-julis img {
+    width: 3.75rem;
+  }
+
+  .brand-lockup-footer .brand-mark-maju {
+  width: 5.5rem;
+  height: 2.2rem;
+  }
+
+  .brand-lockup-footer .brand-mark-maju img {
+    width: 7.5rem;
+  top: calc(50% + 0.49rem);
+  }
+
+  .brand-lockup-footer .brand-lockup-divider {
+    height: 1.8rem;
+  }
+
+  @media (max-width: 520px) {
+    .brand-lockup-header {
+      gap: 0.3rem;
+      transform: scale(0.78);
+      transform-origin: left center;
+      margin-right: -2.5rem;
+    }
+
+    .brand-lockup-hero {
+      gap: 0.55rem;
+      transform: scale(0.78);
+      transform-origin: left center;
+    }
   }
 }

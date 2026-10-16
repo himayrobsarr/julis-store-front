@@ -1,13 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import CartDrawer from "./components/CartDrawer";
 import Catalog from "./components/Catalog";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import StorySections from "./components/StorySections";
+import { CATALOG_ONLY_MODE } from "./data/catalog";
 import PaymentResultPage from "./pages/PaymentResultPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
+import LegalPage from "./pages/LegalPage";
+import SizeGuidePage from "./pages/SizeGuidePage";
 import { createWhatsappOrder, createWompiOrder } from "./services/api";
 import { openWompiCheckout } from "./services/wompi";
 
@@ -176,6 +179,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="min-h-screen text-ink">
         <Header cartCount={cartCount} onOpenCart={() => setIsCartOpen(true)} />
         <Routes>
@@ -194,9 +198,12 @@ export default function App() {
             element={<ProductDetailsPage onAddToCart={addToCart} />}
           />
           <Route path="/payments/result" element={<PaymentResultPage />} />
+          <Route path="/politica-de-cambios" element={<LegalPage policy="changes" />} />
+          <Route path="/tratamiento-de-datos" element={<LegalPage policy="privacy" />} />
+          <Route path="/guia-de-tallas" element={<SizeGuidePage />} />
         </Routes>
         <Footer />
-        <CartDrawer
+        {!CATALOG_ONLY_MODE ? <CartDrawer
           items={cartItems}
           isOpen={isCartOpen}
           onClose={() => setIsCartOpen(false)}
@@ -206,10 +213,20 @@ export default function App() {
         onCheckout={sendWhatsappOrder}
         onPayOnline={sendWompiOrder}
         checkoutState={checkoutState}
-      />
+        /> : null}
       </div>
     </BrowserRouter>
   );
+}
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [pathname]);
+
+  return null;
 }
 
 function buildOrderPayload(customer, items) {

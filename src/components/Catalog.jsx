@@ -1,5 +1,6 @@
 import { Search, SlidersHorizontal } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { CATALOG_ONLY_MODE, visualCatalogProducts } from "../data/catalog";
 import { fetchCategories, fetchProducts } from "../services/api";
 import {
   getProductSearchText,
@@ -24,6 +25,13 @@ export default function Catalog({ onAddToCart }) {
     async function loadCatalog() {
       setStatus("loading");
       setErrorMessage("");
+
+      if (CATALOG_ONLY_MODE) {
+        setProducts(visualCatalogProducts);
+        setApiCategories([]);
+        setStatus("success");
+        return;
+      }
 
       try {
         const [productsResponse, categoriesResponse] = await Promise.all([
@@ -91,22 +99,28 @@ export default function Catalog({ onAddToCart }) {
 
       return matchesCategory && matchesSize && matchesQuery;
     });
-  }, [category, query, size]);
+  }, [category, products, query, size]);
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8" id="catalogo">
       <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="text-sm font-semibold text-clay">Catalogo al detal</p>
-          <h2 className="mt-2 text-3xl font-semibold text-ink sm:text-4xl">
-            Prendas listas para combinar
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-clay">Nuestro catálogo</p>
+          <h2 className="mt-3 font-display text-3xl font-semibold text-ink sm:text-5xl">
+            Descubre la colección
           </h2>
           <p className="mt-3 max-w-2xl text-base leading-7 text-ink/66">
-            Sudaderas, enterizos y conjuntos casuales para bebes y ninos pequenos.
+            Prendas cómodas y llenas de detalles para acompañar cada etapa de su crecimiento.
           </p>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-[minmax(0,260px)_150px]">
+        <div
+          className={
+            sizeOptions.length > 0
+              ? "grid gap-3 sm:grid-cols-[minmax(0,260px)_150px]"
+              : "w-full md:w-[280px]"
+          }
+        >
           <label className="relative block">
             <span className="sr-only">Buscar producto</span>
             <Search
@@ -123,7 +137,7 @@ export default function Catalog({ onAddToCart }) {
             />
           </label>
 
-          <label className="relative block">
+          {sizeOptions.length > 0 ? <label className="relative block">
             <span className="sr-only">Filtrar por talla</span>
             <SlidersHorizontal
               className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink/42"
@@ -143,7 +157,7 @@ export default function Catalog({ onAddToCart }) {
                 </option>
               ))}
             </select>
-          </label>
+          </label> : null}
         </div>
       </div>
 
@@ -187,7 +201,7 @@ export default function Catalog({ onAddToCart }) {
       ) : null}
 
       {status === "success" && products.length > 0 ? (
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filteredProducts.map((product) => (
             <ProductCard product={product} onAddToCart={onAddToCart} key={product.id} />
           ))}

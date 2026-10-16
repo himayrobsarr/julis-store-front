@@ -47,6 +47,9 @@ export function getProductSearchText(product) {
     product.name,
     product.description,
     product.categoryName,
+    product.reference,
+    product.color,
+    ...(product.availableSizes || []),
     ...product.variants.flatMap((variant) => [variant.size, variant.color, variant.sku]),
   ]
     .filter(Boolean)
@@ -55,7 +58,12 @@ export function getProductSearchText(product) {
 }
 
 export function getProductSizes(product) {
-  return [...new Set(product.variants.map((variant) => variant.size).filter(Boolean))];
+  return [
+    ...new Set([
+      ...(product.availableSizes || []),
+      ...product.variants.map((variant) => variant.size),
+    ].filter(Boolean)),
+  ];
 }
 
 export function getInitialVariant(product) {

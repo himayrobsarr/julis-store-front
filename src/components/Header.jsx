@@ -1,23 +1,23 @@
 import { Menu, MessageCircle, ShoppingBag, X } from "lucide-react";
 import { useState } from "react";
-import { brand } from "../data/catalog";
+import { CATALOG_ONLY_MODE } from "../data/catalog";
+import BrandLockup from "./BrandLockup";
 
 const navItems = [
-  { label: "Catalogo", href: "#catalogo" },
-  { label: "Bebes", href: "#catalogo" },
-  { label: "Mayoristas", href: "#mayoristas" },
-  { label: "Contacto", href: "#contacto" },
+  { label: "Catalogo", href: "/#catalogo" },
+  { label: "Guía de tallas", href: "/guia-de-tallas" },
+  { label: "Nuestra esencia", href: "/#nosotros" },
+  { label: "Contacto", href: "/#contacto" },
 ];
 
 export default function Header({ cartCount, onOpenCart }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-ink/10 bg-cotton/90 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a className="focus-ring rounded-sm" href="#inicio" aria-label="Ir al inicio">
-          <span className="block text-lg font-semibold leading-5 text-ink">{brand.name}</span>
-          <span className="block text-xs text-ink/60">@{brand.handle}</span>
+    <header className="sticky top-0 z-40 border-b border-ink/8 bg-cotton/88 shadow-[0_8px_32px_rgba(63,70,72,0.06)] backdrop-blur-xl">
+      <div className="mx-auto flex h-[74px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <a className="focus-ring rounded-xl" href="/" aria-label="Ir al inicio">
+          <BrandLockup size="header" />
         </a>
 
         <nav className="hidden items-center gap-1 md:flex" aria-label="Principal">
@@ -35,24 +35,26 @@ export default function Header({ cartCount, onOpenCart }) {
         <div className="flex items-center gap-2">
           <a
             className="focus-ring hidden h-10 items-center gap-2 rounded-full bg-olive px-4 text-sm font-semibold text-white transition hover:bg-olive/90 sm:inline-flex"
-            href="#contacto"
+            href="/#contacto"
           >
             <MessageCircle size={18} aria-hidden="true" />
-            WhatsApp
+            Hablemos
           </a>
-          <button
-            className="focus-ring relative grid h-10 w-10 place-items-center rounded-full border border-ink/12 bg-white text-ink transition hover:border-olive"
-            type="button"
-            aria-label="Abrir bolsa de pedido"
-            onClick={onOpenCart}
-          >
-            <ShoppingBag size={20} aria-hidden="true" />
-            {cartCount > 0 ? (
-              <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-clay px-1 text-xs font-bold text-white">
-                {cartCount}
-              </span>
-            ) : null}
-          </button>
+          {!CATALOG_ONLY_MODE ? (
+            <button
+              className="focus-ring relative grid h-10 w-10 place-items-center rounded-full border border-ink/12 bg-white text-ink transition hover:border-olive"
+              type="button"
+              aria-label="Abrir bolsa de pedido"
+              onClick={onOpenCart}
+            >
+              <ShoppingBag size={20} aria-hidden="true" />
+              {cartCount > 0 ? (
+                <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-clay px-1 text-xs font-bold text-white">
+                  {cartCount}
+                </span>
+              ) : null}
+            </button>
+          ) : null}
           <button
             className="focus-ring grid h-10 w-10 place-items-center rounded-full border border-ink/12 bg-white text-ink md:hidden"
             type="button"

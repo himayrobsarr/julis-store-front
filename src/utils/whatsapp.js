@@ -1,4 +1,5 @@
 import { formatCurrency } from "./format";
+import { contact } from "../data/catalog";
 
 export function makeProductMessage(product, size) {
   return [
@@ -29,7 +30,7 @@ export function makeCartMessage(items) {
 }
 
 export function whatsappHref(message) {
-  const configuredNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "";
+  const configuredNumber = import.meta.env.VITE_WHATSAPP_NUMBER || contact.whatsappNumber;
   const phone = configuredNumber.replace(/\D/g, "");
   const baseUrl = phone ? `https://wa.me/${phone}` : "https://wa.me/";
 
